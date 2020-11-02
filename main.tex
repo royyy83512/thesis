@@ -1,0 +1,106 @@
+\documentclass[12pt,a4paper]{report} 
+
+\usepackage[utf8]{inputenc}
+\usepackage{array}
+\usepackage{wrapfig}
+\usepackage{multirow}
+\usepackage{tabu}
+\usepackage{amsmath}
+\usepackage{background}
+\usepackage{style/nthu_format}
+\usepackage{xcolor}
+\usepackage[square,sort,comma,numbers]{natbib}
+\usepackage{url}
+\usepackage{enumerate}
+\usepackage{titlesec}
+\setcounter{secnumdepth}{4}
+
+\titleformat{\paragraph}{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+
+\usepackage{caption}
+\usepackage{float}
+\usepackage[section]{placeins}
+\usepackage{times}
+\usepackage{pdfpages}
+
+\usepackage{tikz}
+
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+%\usepackage{algorithmic}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{subfigure}
+\usepackage{url}
+\usepackage[encapsulated]{CJK} 
+\usepackage[nottoc,notlot,notlof]{tocbibind}
+
+% pseudocode packages
+\usepackage{algorithm}
+%\usepackage{algorithmic}
+\usepackage{varwidth}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+\usepackage{graphics}
+\usepackage{epsfig}
+
+\algrenewcommand\algorithmicrequire{\textbf{Input:}}
+\algrenewcommand\algorithmicensure{\textbf{Output:}}
+\algrenewcommand\textproc{}
+
+% package for listed items
+\usepackage{enumerate}
+
+% set spacing package
+\usepackage{setspace}
+
+% math mode package
+\usepackage{relsize}
+
+% use table cell package
+\usepackage{makecell}
+
+% use indent package
+%\usepackage{indentfirst}
+
+% use verbatim package
+\usepackage{verbatim}  
+
+% 添加首行縮進，兩個字符
+\usepackage{indentfirst}
+\setlength{\parindent}{2em}
+
+\usetikzlibrary{shapes.geometric, arrows}
+
+\backgroundsetup{scale=1.5, contents={\includegraphics{images/nthu_logo}}}
+%-------------------------------------------------------------------------
+% take the % away on next line to produce the final camera-ready version
+\pagestyle{empty}
+
+%-------------------------------------------------------------------------
+\begin{document}
+\begin{CJK}{UTF8}{bkai}
+
+
+\beforepreface
+
+%-------------------------------------------------------------------------
+\clearpage
+\thispagestyle{empty}
+%-------------------------------------------------------------------------
+
+
+\afterpreface 
+%章節順序與文獻格式
+\include{introduction}
+\include{relatedwork}
+\include{methodology}
+\include{experiment}
+\include{conclusion}
+\bibliographystyle{unsrtnat}
+\bibliography{references}
+\include{appendix}
+
+\end{CJK}
+\end{document}

@@ -1,0 +1,49 @@
+\chapter{Methodology}
+\section{標題}
+\subsection{次標題}
+
+\textbf{文字粗體}
+
+文字\par %換段
+新段縮排
+
+文字\\  %換行
+新行不縮排
+
+$i$、$j$、$p_{ij}^{0}$，英文斜體與公式文字
+
+\begin{equation} %插入公式
+sim(x,x') = \frac{2\left | X\cap X' \right |}{X+X'}%LaTeX 公式
+\end{equation}
+
+
+
+
+\newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}
+\captionof{table}{表格}
+\begin{tabular}{|c|c|}
+\hline
+Text1 & Text2\\
+\hline
+\tabincell{l}{　%tabincell 表格文字強制換行
+Effect:\\
+To nourish liver, brighten eyes, enrich kidney, \\moisten lung, lower blood pressure.\\
+\\Indication:\\ 
+Lassitude in lumbus and knees, emission, dizziness\\ and dim vision, lung disease with cough, diabetes mellitus.
+} & \tabincell{l}{
+Low Vision\\
+Blood Pressure\\ 
+Dizziness\\
+Systemic arterial pressure\\
+Vertigo\\
+Diabetes Mellitus\\
+Lassitude\\
+Disease \\
+Blood pressure finding\\ 
+Dizziness Adverse Event \\
+Weakness\\
+Pneumonia in pertussis
+}\\
+\hline
+\end{tabular}
+
