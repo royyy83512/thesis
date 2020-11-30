@@ -94,12 +94,43 @@ Lastly, the value of the formation cost function is shown as:
 \end{equation}
 
 
-\section{Path Planning Algorithm}
+\section{Distributed Path Planning Algorithm}
 Our proposed algorithm is illustrated in Algorithm 1. Firstly, each UAV predicts trajectories base on the time window, rejecting the ones which may collide into obstacles or teammates. In this step, we can assure that obstacles and inter-vehicle collision will not occur at any time. However, we should identify the difference between the two circumstances by using a flag, which may affect the UAV's behavior at the final of the algorithm. Secondly, the UAV finds the minimum-cost trajectory by using the scoring system. Lastly, UAV decides its behavior among the three states: flying, waiting, and searching.
 
+\begin{algorithm}[htbp] 
+\caption{trajectory planning}
+\begin{algorithmic}[1]
+\State $cost_{min}$ = $\infty$
+\State$traj*$ = [ ]
+\State $interCollision$ = $false$
+\For{$v$ in time window}  
+    \For{$\omega$ in time window}
+        \State predict a possible trajectory $traj$
+    　　\If{$traj$ may collide into obstacles}
+    　　　　\State continue
+    　　\EndIf
+    　　\If{$traj$ may collide into teamates}
+    　　　　\State $interCollision$ = $true$
+    　　　　\State continue
+    　　\EndIf
+    　　\State calculate $cost$ by using the scoring system 
+    　　\If{$cost_{min}$ $>$ $cost$}
+    　　　　\State $cost_{min}$ = $cost$
+    　　　　\State $traj*$ = $traj$
+    　　\EndIf
+    \EndFor
+\EndFor
+\If{$traj*$ exists}
+    \State \Return $traj*$
+    \If{$interCollision$ is $true$}
+        \State \Return $state$ = $waiting$
+    \EndIf
+\EndIf
+\State \Return $state$ = $searching$
+\end{algorithmic}
+\end{algorithm}
 
 \begin{tikzpicture}
-
 \node[shape=circle, align=center, draw=black, minimum size=2cm] (wa) at (-3.5, 0) {waiting};
 \node[shape=circle, align=center, draw=black, minimum size=2cm] (fl) at (0,5) {flying};
 \node[shape=circle, align=center, draw=black, minimum size=2cm] (se) at (3.5, 0) {searching};
@@ -123,7 +154,7 @@ exceeds Wait, the state Searching will be invoked.
 
 $searching$ is also be used when a UAV has no trajectories found due to the obstacle collision. The UAV stops and rotates its orientation to plan other possible trajectories. In this paper, the orientation is clockwise rotated with a predefined angular velocity $\omega_{search}$. The equation is shown as follows:
 
-\begin{equation} 
+\begin{equation}
 \begin{aligned}
 & \theta_{i}(t) = \theta_{i}(t_{0}) + t \cdot \omega_{search}
 \end{aligned}
@@ -133,36 +164,4 @@ In our proposed algorithm, the overall time complexity depends on the time windo
 
 
 
-\begin{algorithm}[t]
-\caption{trajectory planning} 
-\begin{algorithmic}[1]
-\State $cost_{min}$ = $\infty$
-\State$traj*$ = [ ]
-\State $interCollision$ = $false$
-\For{i = $v_{0}$ to $v_{T}$}  
-    \For{j = $\omega_{0}$ to $\omega_{T}$}
-        \State predict a possible trajectory $traj$
-    　　\If{$traj$ may collide into obstacles}
-    　　　　\State continue
-    　　\EndIf
-    　　\If{$traj$ may collide into teamates}
-    　　　　\State $interCollision$ = $true$
-    　　　　\State continue
-    　　\EndIf
-    　　\State calculate $cost$ by using the scoring system 
-    　　\If{$cost_{min}$ $>$ $cost$}
-    　　　　\State $cost_{min}$ = $cost$
-    　　　　\State $traj*$ = $traj$
-    　　\EndIf
-    \EndFor
-\EndFor
-\If{$traj*$ != NULL}
-    \State \Return $traj*$
-    \If{$interCollision$ == $true$ and $state$== $flying$}
-        \State \Return $state$ = $waiting$
-    \EndIf
-\EndIf
-\State \Return $state$ = $searching$
-\end{algorithmic}
-\end{algorithm}
 
