@@ -1,3 +1,4 @@
+  
 \documentclass[12pt,a4paper]{report} 
 
 \usepackage[utf8]{inputenc}
@@ -20,6 +21,7 @@
 
 
 \usepackage{caption}
+\usepackage{subcaption}
 \usepackage{float}
 \usepackage[section]{placeins}
 \usepackage{times}
@@ -29,9 +31,8 @@
 
 \usepackage{graphicx}
 \graphicspath{ {images/} }
-%\usepackage{algorithmic}
 \usepackage{amsmath, amsthm, amssymb}
-\usepackage{subfigure}
+%\usepackage{subfigure}
 \usepackage{url}
 \usepackage[encapsulated]{CJK} 
 \usepackage[nottoc,notlot,notlof]{tocbibind}
@@ -39,6 +40,7 @@
 % pseudocode packages
 \usepackage{algorithm}
 %\usepackage{algorithmic}
+\usepackage{algorithmicx}
 \usepackage{varwidth}
 \usepackage{algpseudocode}
 \usepackage{amsmath}
@@ -82,16 +84,13 @@
 \begin{document}
 \begin{CJK}{UTF8}{bkai}
 
-
 \beforepreface
-
 %-------------------------------------------------------------------------
 \clearpage
 \thispagestyle{empty}
 %-------------------------------------------------------------------------
-
-
 \afterpreface 
+
 %章節順序與文獻格式
 \include{introduction}
 \include{relatedwork}

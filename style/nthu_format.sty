@@ -31,21 +31,7 @@ dalthesis documentation.}}{}
 % so that single spacing is used.
 % (Note \def\figure{\@float{figure}set single spacing} doesn't work
 %  because figure has an optional argument)
-\def\@xfloat#1[#2]{\ifhmode \@bsphack\@floatpenalty -\@Mii\else
-   \@floatpenalty-\@Miii\fi\def\@captype{#1}\ifinner
-      \@parmoderr\@floatpenalty\z@
-    \else\@next\@currbox\@freelist{\@Mental_Disorder_Research_school \csname ftype@#1\endcsname
-       \multiply\@tempcnta\@xxxii\advance\@tempcnta\sixt@@n
-       \@tfor \@tempa :=#2\do
-            {\if\@tempa h\advance\@tempcnta \@ne\fi
-             \if\@tempa t\advance\@tempcnta \tw@\fi
-             \if\@tempa b\advance\@tempcnta 4\relax\fi
-             \if\@tempa p\advance\@tempcnta 8\relax\fi
-     }\global\count\@currbox\@tempcnta}\@fltovf\fi
-    \global\setbox\@currbox\vbox\bgroup
-    \def\baselinestretch{1}\@normalsize
-    \boxmaxdepth\z@
-    \hsize\columnwidth \@parboxrestore}
+
 
 % Redefine the macro used for footnotes to use single spacing
 \long\def\@footnotetext#1{\insert\footins{\def\baselinestretch{1}\footnotesize
@@ -64,17 +50,23 @@ dalthesis documentation.}}{}
 \def\enSchoolAddress{Hsinchu, Taiwan, 30013}
 \def\enTreatiseType{Master thesis} %set "Phd Diseertation" or "Master thesis"
 \def\enFullDegreeName{Degree of Master in Institute of Information Systems and Applications}
-\def\studentID{105123456}
-\def\enStudentName{Xiao-Ming Wang}
+\def\studentID{107065523}
+\def\enStudentName{Hung-Yi, Luo}
 \def\enAdvisorName{Von-Wun Soo}
-\def\enTitle{論文題目(中文)\\Thesis Title (English)
+\def\enTitle{
+%分散式無人機群路徑規劃在未知環境中彈性隊形協調
+分散式無人機群在未知環境中彈性隊形協調及路徑規劃
+
+
+\\Flexible formation coordination for distributed UAVs path planning in unknown environments
+
 }
-\def\enGraduateDate{December~~2018}
+\def\enGraduateDate{November~~2020}
 \def\zhTitle{ }
-\def\zhStudentName{王小明}
+\def\zhStudentName{羅宏翊}
 \def\zhAdvisorName{蘇豐文}
-\def\zhYear{一〇七}
-\def\zhMonth{十二}
+\def\zhYear{一〇九}
+\def\zhMonth{十一}
 
 \def\university#1{\gdef\@university{#1}}
 \def\address#1{\gdef\@address{#1}}

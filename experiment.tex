@@ -1,82 +1,125 @@
 \chapter{Experiments and Results}
-\section{標題}
-
-\subsection{次標題}
-
-\begin{itemize}
-\item 項目
-\item 項目
-\end{itemize}
-
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[scale=0.7]{figures/Fig1.png}%scale:表格縮放
-    \caption{圖標題}
-    \label{fig:fig_label}
-\end{figure}
+In this section, computer simulation results are presented in a two-dimensional space. The scoring system for formation coordination is validated in Section 4.1, and the path planning algorithm is tested via three scenarios (Section 4.2). The first shows how the team avoids obstacles by spitting and merging, the second shows how the team compress the formation to pass through a narrow area, and the last validate how the team find a solution when encountering a blind alley. The parameters used in our simulation is shown as the below table:
 
 
 \begin{center}
-\captionof{table}{表格名稱}
-\label{table:combination}
-\begin{tabular}{ p{3cm}p{2.5cm}p{2.5cm}p{2.5cm}p{2.5cm}p{2.5cm}p{2.5cm} } %col width
-    \Xhline{1.3pt}
-    \textbf{} & \textbf{Method1}  & \textbf{Method2} & \textbf{Method3} & \textbf{Method4}\\  %\textbf 粗體
-    \Xhline{1.3pt}
-        All AUC & 0.954±0.070 & 0.957±0.069 & 0.956±0.068 & \textbf{0.964±0.069}  \\
-        Fold AUC & 0.947±0.019 & 0.943±0.033 & \textbf{0.948±0.019} & 0.941±0.036   \\
-        Accuracy & 0.994 & 0.992 & 0.994 & 0.992   \\
-        Precision & 0.329 & 0.251 & 0.342 & 0.262\\
-        Recall & 0.207 & 0.292 & 0.204 & 0.277 \\
-        F1-score & 0.254 & 0.270 & 0.256 & 0.269\\
-        MCC & 0.296 & 0.333 & 0.306 & 0.330 \\
-    \Xhline{1.3pt}
-\end{tabular}
-\end{center}
-
-
-
- \begin{center}
-\captionof{table}{表格2}
-\label{table:combination}
-\resizebox{\textwidth}{25mm}{ %重新設定表格長寬 \resizebox{寬}{高}{表格}
-\begin{tabular}{cccccc} %l（left），r（right），c（center）
-    \Xhline{1.3pt}
-    \textbf{} & \textbf{Assaf Gottlieb}  & \textbf{FeiWang} & \textbf{Yin-Ying Wang} & \textbf{Xujun Liang} & \textbf{Our Work}\\ 
-    \Xhline{1.3pt}
-        \textbf{Drug} & 593(Drug Bank) & 799 & 928 & 763 & 1080(Drug Bank)\\
-        \textbf{Indication/disease} & 313(OMIM) & 719 & 608 & 681 & 1390(Disease Ontology)\\
-        \textbf{Associated}  & 1933(OMIM) & 3250(Li and Lu) & CTD & Wang et al., 2014 & 13271(PharmacotherapyDB)\\
-        \textbf{method} & logistic regression & logistic regression & PINA & sparse subspace learning & random walk\\
-        \textbf{AUC} & 0.92±0.02(10-fold) & 0.864(10-fold) & 0.8969(5-fold) & 0.9178±0.0121(5-fold)& 0.946±0.023(5-fold) \\
-        &  &  &  & & 0.948±0.019(10-fold) \\
-    \Xhline{1.3pt}
-\end{tabular}}
-\end{center}
-
-
-
-\begin{center}
-\captionof{table}{表格3}
+\captionof{table}{Simulation parameters}
 \label{table:combination}
 \scalebox{0.9}{ %表格縮放
 \begin{tabular}{ll} 
     \Xhline{1.3pt}
-    \textbf{compound} & \textbf{pubchemID} \\ 
+    \textbf{parameter} & \textbf{value} \\ 
     \Xhline{1.3pt}
-        epigallocatechin gallate (EGCG) & 65064\\
-        caffeic acid (CA) &	689043\\
-        gallic acid (GA) & 370\\
-        catechin (C) & 73160\\
-        epicatechin (EC) & 72276\\
-        gallocatechin (GC) & 9882981\\
-        epigallocatechin (EGC) & 72277\\
-        catechin gallate (CG) &	6419835\\
-        epicatechin gallate (ECG) &	107905\\
-        gallocatechin gallate (GCG)	& 199472\\
+        UAV radius ($r$) & 0.3 $m$\\
+        safe distance ($d_{safe}$) & 0.6 $m$\\
+        minimum velocity ($v_{min}$) & 0 $m/s$\\
+        maximum velocity ($v_{max}$) & 15 $m/s$\\
+        minimum yaw rate ($\omega_{min}$) & -40 $rad/s$\\
+        maximum yaw rate ($\omega_{max}$) & 40 $rad/s$\\
+        maximum acceleration ($a_{max}$) & 0.3 $m/s^{2}$\\
+        predicted time ($t_{T}$) &	2 $s$\\
+        time tick  &	0.2 $s$\\
     \Xhline{1.3pt}
 \end{tabular}}
 \end{center}
+
+
+\section{Validation of The Scoring System}
+(not finished)
+
+\begin{figure}
+     \centering
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{figures/reconfigure_1.png}
+         \caption{random placed UAV}
+         \label{before merging}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{figures/reconfigure_2.png}
+         \caption{formation coordination}
+         \label{ew}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{figures/reconfigure_3.png}
+         \caption{final formation}
+         \label{qw}
+     \end{subfigure}
+        \caption{A group of 10 UAVs are random positioned and then reconfigure a compact formation}
+        \label{fig}
+\end{figure}
+
+\begin{figure}
+     \centering
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{figures/merge_1.png}
+         \caption{before merging}
+         \label{fig:y equals x}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{figures/merge_2.png}
+         \caption{formation coordination}
+         \label{fig:three sin x}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{figures/merge_3.png}
+         \caption{after merging}
+         \label{fig:five over x}
+     \end{subfigure}
+        \caption{Two groups of 5 UAVs moving toward a same goal point in an obstacle-free environment}
+        \label{fig:three graphs}
+\end{figure}
+
+\section{Validation of Comprehensive Performance}
+\subsection{Obstacle avoidance}
+We set up an environment with multiple obstacles dispersed randomly with a radius from 0.2 (m) to 1.5 (m) in the flight space. The goal point is set at (24, 24), and a formation flight for a team is considered to start from the left-down corner. The team consists of six UAVs, namely, u1, u2, u3, u4, u5, and u6, which are labeled from left to right and top to bottom. The initial positions for the UAVs are set to (1, 5), (3, 5), (5, 5), (3, 3), (5, 3), (5, 1) respectively, and their predefined trajectories are straight lines toward the goal point.
+
+The result is shown in Figure 4.2, where colored-dashed lines denote the trajectories corresponding to each UAV. The group separates in the beginning to avoid the small obstacle placed in (9, 9), and they then merge into a group after passing it. Before reaching the goal point, the split again to dodge the bigger obstacle successfully.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{figures/exp1-3.png}
+    \caption{Overall trajectories}
+    \label{fig:fig_label}
+\end{figure}
+
+\subsection{Passing through a narrow area}
+To test the capability of formation compression, we set up a narrow area for the UAV team to pass through. In the simulation, UAVs should switch the state $flying$ to state $waiting$ before passing through the narrow trail. The result is shown in Figure 4.3, where a team of 8 UAVs start from the left and the goal point is set on the right. In Figure 4.4, we use the color for UAVs to identify the states while passing through the trail, where the green UAVs represent the ones in a $flying$ state and the black ones are for the $waiting$ state. It is evident that both sides of the UAV predict the inter-vehicle may occur before entering, and therefore they wait for the former teammates.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=1]{figures/trail_overall.png}
+    \caption{Overall trajectories with a narrow trail}
+    \label{fig:fig_label}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=1]{figures/trail_enter.png}
+    \caption{waiting state validation}
+    \label{fig:fig_label}
+\end{figure}
+
+\subsection{Comprehensive test}
+More complex obstacles are placed on testing comprehensive functionality. Due to the limited sensor, UAVs cannot predict the obstacles that might block the direction in advance. Our algorithm requires neither leader nor fixed formation so that the team can easily fly in the opposite direction, and find another solution. 
+
+Figure 4.5 shows that the 6 UAVs are blocked in the beginning after they move for a short distance. Nevertheless, the pioneers invoke the state $searching$ when there is no available path. On the other hand, the UAVs behind switch the state $flying$ to $waiting$ and wait for their teammates. To prevent deadlock, We preset the constant $clock$ to 2 seconds. That is, every UAV will start to navigate new paths after the time-out. Finally, it can be seen that the team successfully find another route and fly toward the goal point.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=1]{figures/comprehensive_simulation_2.png}
+    \caption{blocking obstacles}
+    \label{fig:fig_label}
+\end{figure}
+
+
 
 
