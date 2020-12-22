@@ -23,6 +23,7 @@ for all $i\in$\{1, 2, ..., $N$\}, where $(x_{i}(t_{n})$, $y_{i}(t_{n}))$ is the 
 \begin{aligned}
 & 0\leq v_{i}(t)\leq v_{\max}\\
 & -\omega_{\max}\leq\omega_{i}(t)\leq\omega_{\max}
+\label{eqn:bound}
 \end{aligned}
 \end{equation}
 
@@ -35,7 +36,7 @@ On a battlefield of high uncertainty, We use the dynamic windows approach for ea
 \end{aligned}
 \end{equation}
 
-The above predicted possible trajectories is depended on the inputs ${v}$ and ${\omega}$ controlled by time windows, and the range of ${v}$ and ${\omega}$ can be adjusted more tightly from equation 3.3 as follows:
+The above predicted possible trajectories is depended on the inputs ${v}$ and ${\omega}$ controlled by time windows, and the range of ${v}$ and ${\omega}$ can be adjusted more tightly from equation \ref{eqn:bound} as follows:
 
 \begin{equation}
 \begin{aligned}
@@ -95,14 +96,14 @@ Lastly, the value of the formation cost function is shown as:
 
 
 \section{Distributed Path Planning Algorithm}
-Our proposed algorithm is illustrated in Algorithm 1. Firstly, each UAV predicts trajectories base on the time window, rejecting the ones which may collide into obstacles or teammates. In this step, we can assure that obstacles and inter-vehicle collision will not occur at any time. However, we should identify the difference between the two circumstances by using a flag, which may affect the UAV's behavior at the final of the algorithm. Secondly, the UAV finds the minimum-cost trajectory by using the scoring system. Lastly, UAV decides its behavior among the three states: flying, waiting, and searching.
+Our proposed algorithm is illustrated in Algorithm \ref{alg:tra_planning}. Firstly, each UAV predicts trajectories base on the time window, rejecting the ones which may collide into obstacles or teammates. In this step, we can assure that obstacles and inter-vehicle collision will not occur at any time. However, we should identify the difference between the two circumstances by using a flag, which may affect the UAV's behavior at the final of the algorithm. Secondly, the UAV finds the minimum-cost trajectory by using the scoring system. Lastly, UAV decides its behavior among the three states: flying, waiting, and navigating.
 
 \begin{algorithm}[htbp] 
-\caption{trajectory planning}
+\caption{\label{alg:tra_planning}trajectory planning}
 \begin{algorithmic}[1]
-\State $cost_{min}$ = $\infty$
-\State$traj*$ = [ ]
+\State $cost_{min}$ = $\infty$, $traj*$ = [ ]
 \State $interCollision$ = $false$
+\State Calculate dynamic windows
 \For{$v$ in time window}  
     \For{$\omega$ in time window}
         \State predict a possible trajectory $traj$
@@ -126,41 +127,58 @@ Our proposed algorithm is illustrated in Algorithm 1. Firstly, each UAV predicts
         \State \Return $state$ = $waiting$
     \EndIf
 \EndIf
-\State \Return $state$ = $searching$
+\State \Return $state$ = $navigating$
+
 \end{algorithmic}
 \end{algorithm}
 
-\begin{tikzpicture}
-\node[shape=circle, align=center, draw=black, minimum size=2cm] (wa) at (-3.5, 0) {waiting};
-\node[shape=circle, align=center, draw=black, minimum size=2cm] (fl) at (0,5) {flying};
-\node[shape=circle, align=center, draw=black, minimum size=2cm] (se) at (3.5, 0) {searching};
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=1]{figures/states.png}
+    \caption{The relationship between each states}
+    \label{fig:states}
+\end{figure}
 
-\path[thick,->] (fl) edge node[left] {inter-vehicle collision} (wa);
-\path[thick,->] (fl) edge node[right] {obstacle collision} (se);
-\path[thick,->] (wa) edge node[below] {time-out} (se);
-
-\end{tikzpicture}
-
-Most of the time, the state Flying is kept.
-Once the set of trajectory nodes are calculated and returned from the algorithm, the UAV follows the nodes and simultaneously predicted a new trajectory. The loop will be continued until another state is switched or the goal point is reached. When there are no available trajectories, and the value of the flag is also equal to True, it can be known that the path is blocked by its teammates instead of obstacles. In this case, the state will be automatically switched to Waiting, where UAVs are required to stop and re-plan the path. Waiting is often seen when avoiding obstacles and formation merging, significantly when the orientation changes quickly. Thus, the later UAVs should give in until the former UAVs pass. However, a deadlock may occur when most UAVs congest in an environment such as a blind alley. To solve such a problem, a time constant Clock is used to prevent a UAV wait overtime. If Clock
-exceeds Wait, the state Searching will be invoked.
+Most of the time, UAVs maintain the state $flying$. Once the set of trajectory nodes are calculated and returned from the algorithm, the UAV follows the nodes and simultaneously predicted a new trajectory. The loop will be continued until another state is switched or the goal point is reached. If all of the predicted trajectories are blocked by the teammates, the state will be automatically switched to $waiting$. State $waiting$ refers to a UAV should stop and re-plan another path, and it is often seen when avoiding obstacles or formation merging, significantly when the orientation changes quickly. Thus, the later UAVs should give up the paths until the former UAVs pass. However, a deadlock may occur when most UAVs congest in an environment such as a blind alley. To solve such a problem, we set a constant $clock$ to prevent a UAV from waiting for overtime. If $clock$ exceeds the waiting time, the state $navigating$ will also be invoked.
 \[
     waiting()= 
 \begin{cases}
-    \text{stop and re-plan},& \text{if } clock<t_{wait}\\
-    \text{switch to } searching, & \text{otherwise}
+    \text{stop},& \text{if } clock<t_{wait}\\
+    \text{switch to } navigating, & \text{otherwise}
 \end{cases}
 \]
 
-$searching$ is also be used when a UAV has no trajectories found due to the obstacle collision. The UAV stops and rotates its orientation to plan other possible trajectories. In this paper, the orientation is clockwise rotated with a predefined angular velocity $\omega_{search}$. The equation is shown as follows:
+The UAV stops and rotates its orientation to plan other possible trajectories in state $navigating$. The state $navigating$ is also used in other cases such as multiple or irregular-shaped obstacles. In this paper, we clockwise rotate the orientation with a predefined angular velocity $\omega_{nav}$, the calculation is as follows:
 
 \begin{equation}
 \begin{aligned}
-& \theta_{i}(t) = \theta_{i}(t_{0}) + t \cdot \omega_{search}
+& v_{i} = 0 \\
+& \theta_{i}(t) = \theta_{i}(t_{0}) + t \cdot \omega_{nav}
 \end{aligned}
 \end{equation}
 
+However, the group might end up converging in a straight-line formation after avoiding obstacles in a few certain circumstance, because the collinear of ($x_{i}, y_{i}$), $PG_{i}$ ,and the $End$ causes a fixed orientation for each UAV. To solve the convergence problem, if an UAV's neighbors only appear at the front and the back during the state $flying$ (figure \ref{fig:convergence}), an orientation changing function, as in equation \ref{eqn:convergence}, will allow it to randomly turn left or right for an orientation $\omega_{turn}$ . Once one or more UAVs move to different positions, the formation will be reconfigured.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{figures/line-convergence.png}
+    \caption{straight-line formation convergence problem}
+    \label{fig:convergence}
+\end{figure}
+
+\begin{equation}
+\begin{aligned}
+& \theta_{i} := \theta_{i} \pm \omega_{turn}, &\mbox{if} \mbox{ }  N_{i} \in front \land back
+\label{eqn:convergence}
+\end{aligned}
+\end{equation}
+
+
+
+
 In our proposed algorithm, the overall time complexity depends on the time window [$t_{0}$, $t_{T}$]. The big-O notation can be denoted as $O((t_{T})^2)$ due to the changes by $v$ and $\omega$. More specifically, other variables such as velocity acceleration $a$, angular acceleration $\Delta\omega$, and the resolution used in the for-loop in the algorithm also affect the time performance.
+
+
 
 
 

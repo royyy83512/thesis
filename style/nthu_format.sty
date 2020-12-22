@@ -54,19 +54,18 @@ dalthesis documentation.}}{}
 \def\enStudentName{Hung-Yi, Luo}
 \def\enAdvisorName{Von-Wun Soo}
 \def\enTitle{
-%分散式無人機群路徑規劃在未知環境中彈性隊形協調
-分散式無人機群在未知環境中彈性隊形協調及路徑規劃
+分散式無人機群在路徑規劃中彈性隊形協調
 
 
-\\Flexible formation coordination for distributed UAVs path planning in unknown environments
+\\Flexible formation coordination for distributed UAVs path planning
 
 }
 \def\enGraduateDate{November~~2020}
-\def\zhTitle{ }
+\def\zhTitle{}
 \def\zhStudentName{羅宏翊}
 \def\zhAdvisorName{蘇豐文}
 \def\zhYear{一〇九}
-\def\zhMonth{十一}
+\def\zhMonth{十二}
 
 \def\university#1{\gdef\@university{#1}}
 \def\address#1{\gdef\@address{#1}}
@@ -149,7 +148,7 @@ dalthesis documentation.}}{}
 
 \begin{center}
    
-	\Huge{\textbf{國 立 清 華 大 學 \\	碩  士 論 文  \\\hfill\\}}
+	\Huge{\textbf{國 立 清 華 大 學 \\	碩 士 論 文  \\\hfill\\}}
 
 \Large{\textbf{\zhTitle}
 
@@ -225,7 +224,7 @@ dalthesis documentation.}}{}
     \titlep
     \iffront@pages\chineseabstractpage\else\addtocounter{page}{1}\fi
     \iffront@pages\abstractpage\else\addtocounter{page}{1}\fi
-    \iffront@pages\acknowledgepage\else\addtocounter{page}{1}\fi
+    %%\iffront@pages\acknowledgepage\else\addtocounter{page}{1}\fi
     \iffront@pages\ifdedic@tion
         \newpage\begin{center}\Large\em\null\vskip1in
         \dedication@text
@@ -233,14 +232,18 @@ dalthesis documentation.}}{}
     \fi\fi
     \iffront@pages\tableofcontents\else\addtocounter{page}{1}\fi
     \newpage
-    \iftablespage
-        \addcontentsline{toc}{chapter}{List of Tables}\listoftables
-        \newpage
-    \fi
+
     \iffigurespage
         \addcontentsline{toc}{chapter}{List of Figures}\listoffigures
         \newpage
-   \fi
+    \fi
+    
+    \iftablespagespage
+        \addcontentsline{toc}{chapter}{List of Tables}\listoftables
+        \newpage
+        \addcontentsline{toc}{chapter}{List of Algorithms}\listofalgorithms
+        \newpage
+    \fi
     }
 
 \def\nonumchapter#1{%
